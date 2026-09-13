@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, BookOpen, Terminal, Award, FlaskConical, CloudUpload, FileCode, FileCode2, X, Network, Server } from 'lucide-react';
+import { LayoutDashboard, Calendar, BookOpen, Terminal, Award, FlaskConical, CloudUpload, FileCode, FileCode2, X } from 'lucide-react';
 import { CONCEPT_DOCS, LAB_EXERCISES } from '../data/content';
 import { SFG_CONCEPT_DOCS, SFG_LAB_EXERCISES } from '../data/sfgContent';
 
@@ -71,6 +71,14 @@ export default function Sidebar({
           </div>
 
           <div className="nav-section-title">Core Navigation</div>
+
+          <button
+            className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => handleNavClick('dashboard')}
+          >
+            <LayoutDashboard size={18} />
+            <span>Dashboard Overview</span>
+          </button>
 
           {!isSfg ? (
             <>

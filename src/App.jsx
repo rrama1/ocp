@@ -9,15 +9,15 @@ import LabWorkbench from './components/LabWorkbench';
 import DeployGuide from './components/DeployGuide';
 import YamlWorkbench from './components/YamlWorkbench';
 import SfgBpmlWorkbench from './components/SfgBpmlWorkbench';
-import { STUDY_SCHEDULE_WEEKS, CONCEPT_DOCS, LAB_EXERCISES } from './data/content';
+import DashboardOverview from './components/DashboardOverview';
+import { STUDY_SCHEDULE_WEEKS, CONCEPT_DOCS } from './data/content';
 import { SFG_CONCEPT_DOCS, SFG_LAB_EXERCISES } from './data/sfgContent';
 
 export default function App() {
-  // Active Platform Mode: 'openshift' | 'sfg'
   const [platformMode, setPlatformMode] = useState(() => localStorage.getItem('ex280_platform_mode') || 'openshift');
 
-  // Navigation state
-  const [activeTab, setActiveTab] = useState('schedule');
+  // Navigation state defaults to 'dashboard'
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [activeDocId, setActiveDocId] = useState('doc-01');
   const [activeLabId, setActiveLabId] = useState('lab-01');
   const [searchFilter, setSearchFilter] = useState('');
@@ -53,16 +53,6 @@ export default function App() {
 
   useEffect(() => {
     localStorage.setItem('ex280_platform_mode', platformMode);
-    if (platformMode === 'sfg') {
-      if (activeTab === 'schedule' || activeTab === 'yaml' || activeTab === 'exam' || activeTab === 'cli') {
-        setActiveTab('doc');
-        setActiveDocId('sfg-doc-01');
-      }
-    } else {
-      if (activeTab === 'bpml') {
-        setActiveTab('schedule');
-      }
-    }
   }, [platformMode]);
 
   useEffect(() => {
@@ -107,18 +97,22 @@ export default function App() {
     setActiveTab('lab');
   };
 
-  // Calculate totals for active platform
+  // Calculate totals
+  const allDays = STUDY_SCHEDULE_WEEKS.flatMap((w) => w.days);
+  const totalDaysCount = allDays.length;
+  const completedDaysCount = allDays.filter((d) => completedDays[d.id]).length;
+
   const isSfg = platformMode === 'sfg';
   const currentDocs = isSfg ? SFG_CONCEPT_DOCS : CONCEPT_DOCS;
-  const currentLabs = isSfg ? SFG_LAB_EXERCISES : LAB_EXERCISES;
+  const currentLabs = isSfg ? SFG_LAB_EXERCISES : [];
 
   const totalItemsCount = isSfg
     ? currentDocs.length + currentLabs.length
-    : STUDY_SCHEDULE_WEEKS.flatMap((w) => w.days).length;
+    : totalDaysCount;
 
   const completedItemsCount = isSfg
     ? currentLabs.filter((l) => l.tasks.every((t) => labTaskState[`${l.id}-${t.id}`])).length
-    : STUDY_SCHEDULE_WEEKS.flatMap((w) => w.days).filter((d) => completedDays[d.id]).length;
+    : completedDaysCount;
 
   return (
     <div className="app-container">
@@ -149,6 +143,15 @@ export default function App() {
         />
 
         <main className="content-body">
+          {activeTab === 'dashboard' && (
+            <DashboardOverview
+              onSelectTab={setActiveTab}
+              onSelectPlatform={setPlatformMode}
+              completedDaysCount={completedDaysCount}
+              totalDaysCount={totalDaysCount}
+            />
+          )}
+
           {activeTab === 'schedule' && !isSfg && (
             <StudyTracker
               completedDays={completedDays}
