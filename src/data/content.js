@@ -1,7 +1,7 @@
 export const APP_METADATA = {
   title: "OpenShift EX280 Mastery Kit",
   subtitle: "Red Hat Certified Specialist in OpenShift Administration",
-  version: "1.0.0",
+  version: "2.0.0",
   passingScore: 210,
   maxScore: 300,
   timeLimitMinutes: 180
@@ -13,10 +13,10 @@ export const STUDY_SCHEDULE_WEEKS = [
     title: "Week 1: Core Architecture, CLI Mastery, Authentication & RBAC",
     color: "#22c55e",
     days: [
-      { id: "day1", dayNum: 1, title: "OpenShift vs. Kubernetes Architecture", docRef: "doc-01", task: "Read concept guide 01 and understand RHCOS, Ignition, Router, OAuth, and Cluster Operators." },
-      { id: "day2", dayNum: 2, title: "oc CLI Speed & Manifest Generation", docRef: "doc-02", task: "Practice --dry-run=client -o yaml command generation for Pods, Deployments, Services, Secrets, and ConfigMaps." },
-      { id: "day3", dayNum: 3, title: "User & Group Management & HTPasswd Provider", docRef: "doc-03", task: "Understand OAuth configuration and practice oc adm groups new & add-users." },
-      { id: "day4", dayNum: 4, title: "OpenShift RBAC (Roles & RoleBindings)", docRef: "doc-03", task: "Master oc adm policy add-role-to-user and add-role-to-group." },
+      { id: "day1", dayNum: 1, title: "OpenShift vs. Kubernetes Architecture", docRef: "doc-01", task: "Understand Control Plane components, RHCOS, Machine API, Cluster Operators, and built-in OAuth." },
+      { id: "day2", dayNum: 2, title: "oc CLI Speed & Manifest Generation", docRef: "doc-02", task: "Master --dry-run=client -o yaml generation for Pods, Deployments, Services, Secrets, and ConfigMaps." },
+      { id: "day3", dayNum: 3, title: "User & Group Management & HTPasswd Provider", docRef: "doc-03", task: "Configure HTPasswd identity provider and practice oc adm groups new & add-users." },
+      { id: "day4", dayNum: 4, title: "OpenShift RBAC (Roles & RoleBindings)", docRef: "doc-03", task: "Master oc adm policy add-role-to-user and add-role-to-group for local vs cluster roles." },
       { id: "day5", dayNum: 5, title: "ServiceAccounts & SecurityContextConstraints (SCC)", docRef: "doc-03", task: "Learn default SCCs (restricted-v2, anyuid, privileged) and assign them to ServiceAccounts." },
       { id: "day6", dayNum: 6, title: "Hands-on Lab 01: RBAC & Security", labRef: "lab-01", task: "Complete Lab 01 exercise covering project creation, user groups, and SCC assignment." },
       { id: "day7", dayNum: 7, title: "Week 1 Speed Quiz & Drill", docRef: "doc-02", task: "Test yourself on RBAC policies and group commands without referencing notes." }
@@ -27,13 +27,13 @@ export const STUDY_SCHEDULE_WEEKS = [
     title: "Week 2: Storage, Networking, Routes & Microservice Isolation",
     color: "#eab308",
     days: [
-      { id: "day8", dayNum: 8, title: "Persistent Storage Fundamentals", docRef: "doc-02", task: "Understand PVs, PVCs, StorageClasses, and access modes (ReadWriteOnce, ReadWriteMany)." },
-      { id: "day9", dayNum: 9, title: "Mounting Storage & Handling Permissions", docRef: "doc-02", task: "Attach PVCs with oc set volume and fix file permission issues using fsGroup." },
+      { id: "day8", dayNum: 8, title: "Persistent Storage Fundamentals", docRef: "doc-04", task: "Understand PVs, PVCs, StorageClasses, and access modes (ReadWriteOnce, ReadWriteMany)." },
+      { id: "day9", dayNum: 9, title: "Mounting Storage & Handling Permissions", docRef: "doc-04", task: "Attach PVCs with oc set volume and fix file permission issues using fsGroup." },
       { id: "day10", dayNum: 10, title: "Hands-on Lab 02: Storage & PVC", labRef: "lab-02", task: "Complete Lab 02 exercise creating PVCs and mounting them to Nginx deployments." },
-      { id: "day11", dayNum: 11, title: "Services, Ingress, and OpenShift Routes", docRef: "doc-01", task: "Master HTTP, Edge TLS, Passthrough TLS, and Re-encryption Routes." },
-      { id: "day12", dayNum: 12, title: "NetworkPolicies & Pod Isolation", docRef: "doc-02", task: "Write NetworkPolicy manifests isolating namespaces and pod ingress traffic." },
+      { id: "day11", dayNum: 11, title: "Services, Ingress, and OpenShift Routes", docRef: "doc-05", task: "Master HTTP, Edge TLS, Passthrough TLS, and Re-encryption Routes." },
+      { id: "day12", dayNum: 12, title: "NetworkPolicies & Pod Isolation", docRef: "doc-05", task: "Write NetworkPolicy manifests isolating namespaces and pod ingress traffic." },
       { id: "day13", dayNum: 13, title: "Hands-on Lab 03: Routes & NetworkPolicy", labRef: "lab-03", task: "Complete Lab 03 exercise configuring Edge TLS routes and network isolation." },
-      { id: "day14", dayNum: 14, title: "Week 2 Network Troubleshooting Review", docRef: "doc-04", task: "Practice oc exec, oc debug, and inspecting endpoints for 503 errors." }
+      { id: "day14", dayNum: 14, title: "Week 2 Network Troubleshooting Review", docRef: "doc-10", task: "Practice oc exec, oc debug, and inspecting endpoints for 503 errors." }
     ]
   },
   {
@@ -41,13 +41,13 @@ export const STUDY_SCHEDULE_WEEKS = [
     title: "Week 3: S2I Builds, ImageStreams, Scaling & Operators",
     color: "#38bdf8",
     days: [
-      { id: "day15", dayNum: 15, title: "Source-to-Image (S2I) Architecture", docRef: "doc-01", task: "Understand BuildConfigs, ImageStreams, S2I builders, and oc new-app workflow." },
-      { id: "day16", dayNum: 16, title: "S2I Build Triggers & Environment Injection", docRef: "doc-02", task: "Trigger manual builds with oc start-build and stream logs with -f." },
-      { id: "day17", dayNum: 17, title: "Resource Management (ResourceQuotas & LimitRanges)", docRef: "doc-02", task: "Configure ResourceQuotas for pods/CPU/memory and enforce default LimitRanges." },
-      { id: "day18", dayNum: 18, title: "Horizontal Pod Autoscaling (HPA)", docRef: "doc-02", task: "Configure HPA using oc autoscale based on CPU target thresholds." },
-      { id: "day19", dayNum: 19, title: "Operators & Operator Lifecycle Manager (OLM)", docRef: "doc-01", task: "Understand OperatorHub, Subscriptions, CatalogSources, and OperatorGroups." },
-      { id: "day20", dayNum: 20, title: "Resource Scaling & Quota Drills", docRef: "doc-02", task: "Practice setting pod resource limits, requests, and project-wide caps." },
-      { id: "day21", dayNum: 21, title: "Week 3 Build & Quota Drill", docRef: "doc-02", task: "Test creating S2I builds with custom environment variables and triggers." }
+      { id: "day15", dayNum: 15, title: "Source-to-Image (S2I) Architecture", docRef: "doc-06", task: "Understand BuildConfigs, ImageStreams, S2I builders, and oc new-app workflow." },
+      { id: "day16", dayNum: 16, title: "S2I Build Triggers & Environment Injection", docRef: "doc-06", task: "Trigger manual builds with oc start-build and stream logs with -f." },
+      { id: "day17", dayNum: 17, title: "Resource Management (ResourceQuotas & LimitRanges)", docRef: "doc-07", task: "Configure ResourceQuotas for pods/CPU/memory and enforce default LimitRanges." },
+      { id: "day18", dayNum: 18, title: "Horizontal Pod Autoscaling (HPA)", docRef: "doc-07", task: "Configure HPA using oc autoscale based on CPU target thresholds." },
+      { id: "day19", dayNum: 19, title: "Operators & Operator Lifecycle Manager (OLM)", docRef: "doc-09", task: "Understand OperatorHub, Subscriptions, CatalogSources, and OperatorGroups." },
+      { id: "day20", dayNum: 20, title: "Resource Scaling & Quota Drills", docRef: "doc-07", task: "Practice setting pod resource limits, requests, and project-wide caps." },
+      { id: "day21", dayNum: 21, title: "Week 3 Build & Quota Drill", docRef: "doc-06", task: "Test creating S2I builds with custom environment variables and triggers." }
     ]
   },
   {
@@ -55,9 +55,9 @@ export const STUDY_SCHEDULE_WEEKS = [
     title: "Week 4: Node Management, Troubleshooting & EX280 Mock Exam",
     color: "#ee0000",
     days: [
-      { id: "day22", dayNum: 22, title: "Node Scheduling (Labels, Selectors, Taints)", docRef: "doc-02", task: "Practice node labeling, nodeSelector, taints, and tolerations." },
-      { id: "day23", dayNum: 23, title: "Node Maintenance & Draining", docRef: "doc-02", task: "Master oc adm node cordon, drain, and uncordon procedures." },
-      { id: "day24", dayNum: 24, title: "OpenShift Systematic Troubleshooting", docRef: "doc-04", task: "Read Guide 04 and debug CrashLoopBackOff, ImagePullBackOff, and PVC pending states." },
+      { id: "day22", dayNum: 22, title: "Node Scheduling (Labels, Selectors, Taints)", docRef: "doc-08", task: "Practice node labeling, nodeSelector, taints, and tolerations." },
+      { id: "day23", dayNum: 23, title: "Node Maintenance & Draining", docRef: "doc-08", task: "Master oc adm node cordon, drain, and uncordon procedures." },
+      { id: "day24", dayNum: 24, title: "OpenShift Systematic Troubleshooting", docRef: "doc-10", task: "Read Guide 10 and debug CrashLoopBackOff, ImagePullBackOff, and PVC pending states." },
       { id: "day25", dayNum: 25, title: "Mock Exam Preparation & Time Strategy", docRef: "mock-exam", task: "Review exam guidelines and time budgeting (12 mins per task)." },
       { id: "day26", dayNum: 26, title: "EX280 Full Mock Exam (Attempt 1)", docRef: "mock-exam", task: "Take the 15-scenario mock exam under a 3-hour timer." },
       { id: "day27", dayNum: 27, title: "Mock Exam Grading & Solution Walkthrough", docRef: "exam-solution", task: "Compare your solutions against the 300/300 walkthrough guide." },
@@ -119,20 +119,8 @@ To be a top-tier OpenShift Administrator, you must understand **what OpenShift a
 - Operating system updates are atomic and managed directly by the cluster using \`MachineConfigOperator\` (MCO).
 
 ### B. Security Context Constraints (SCC)
-- In standard Kubernetes, containers often run as \`root\` unless restricted.
 - OpenShift **forbids containers from running as root by default**.
 - Each pod is evaluated against an SCC. The default SCC for workloads is \`restricted-v2\` (allocates arbitrary unprivileged UID range like \`1000670000/10000\`).
-
-### C. OpenShift Routes vs. Kubernetes Ingress
-- A **Route** exposes a \`Service\` externally via HAProxy router.
-- Types of Routes:
-  1. **Unsecured (HTTP)**: Port 80 traffic routed directly to Service.
-  2. **Edge Termination**: TLS is terminated at the OpenShift Router (HAProxy).
-  3. **Passthrough Termination**: TLS is NOT terminated at Router; raw encrypted bytes pass straight to Pod.
-  4. **Re-encryption Termination**: Router terminates external TLS, then re-encrypts connection to backend Pod.
-
-### D. Source-to-Image (S2I)
-- S2I is a toolkit that takes source code from Git, injects it into a builder image (Python, Node.js, Java), compiles the application, and produces a container image automatically inside the cluster.
 `
   },
   {
@@ -188,39 +176,6 @@ oc create secret generic app-secret --from-literal=PASSWORD=SuperSecret123 --dry
 # Generate ServiceAccount
 oc create sa app-sa --dry-run=client -o yaml > sa.yaml
 \`\`\`
-
----
-
-## 3. RBAC & Identity Administration (oc adm policy)
-
-\`\`\`bash
-# Add Role to User in CURRENT Project (local scope)
-oc adm policy add-role-to-user edit developer -n dev-app
-oc adm policy add-role-to-user view user1 -n dev-app
-oc adm policy add-role-to-user admin team-lead -n dev-app
-
-# Manage Groups
-oc adm groups new dev-group user1 user2
-oc adm policy add-role-to-group edit dev-group -n dev-app
-
-# Grant Security Context Constraint (SCC) to ServiceAccount
-oc adm policy add-scc-to-user anyuid -z app-sa -n dev-app
-\`\`\`
-
----
-
-## 4. Routes & Exposing Workloads
-
-\`\`\`bash
-# Expose Service as HTTP Unsecured Route
-oc expose svc api-server --hostname=api.apps.crc.testing -n dev-app
-
-# Create Edge TLS Route
-oc create route edge api-edge --service=api-server --hostname=api-edge.apps.crc.testing --cert=tls.crt --key=tls.key
-
-# Create Passthrough TLS Route
-oc create route passthrough api-pass --service=secure-service --hostname=secure.apps.crc.testing
-\`\`\`
 `
   },
   {
@@ -269,10 +224,253 @@ oc create secret generic htpasswd-secret --from-file=htpasswd=/tmp/htpasswd -n o
   },
   {
     id: "doc-04",
-    title: "04. Systematic OpenShift Troubleshooting",
-    category: "Troubleshooting",
+    title: "04. Persistent Storage, PVCs & Permissions",
+    category: "Storage",
+    readTime: "8 min read",
+    content: `# 💾 Concept Guide 04: Persistent Storage, PVCs & Permissions
+
+Persistent storage in OpenShift allows workloads to retain state across pod restarts and node failures.
+
+---
+
+## 1. PV, PVC & StorageClass Architecture
+
+- **PersistentVolume (PV)**: Physical or cloud storage resource provisioned by cluster admins (NFS, AWS EBS, Ceph/RBD).
+- **PersistentVolumeClaim (PVC)**: A request for storage by a developer/project.
+- **StorageClass**: Enables **dynamic provisioning** so PVCs automatically request underlying cloud storage without manual admin intervention.
+
+### Access Modes:
+- \`ReadWriteOnce\` (RWO): Volume can be mounted as read-write by a single node.
+- \`ReadWriteMany\` (RWX): Volume can be mounted as read-write by many nodes simultaneously.
+- \`ReadOnlyMany\` (ROX): Volume can be mounted as read-only by many nodes.
+
+---
+
+## 2. Creating PVCs & Attaching to Workloads
+
+\`\`\`bash
+# Create 2Gi PVC using imperative dry-run
+oc create pvc db-pvc --claim-class=gp2 --access-mode=ReadWriteOnce --size=2Gi --dry-run=client -o yaml > pvc.yaml
+
+# Attach PVC to existing deployment
+oc set volume deployment/backend-db --add --name=data-vol --type=pvc --claim-name=db-pvc --mount-path=/var/lib/data
+\`\`\`
+
+---
+
+## 3. Handling Permission Denied Errors (fsGroup)
+
+Because OpenShift assigns random UIDs (e.g. \`1000670000\`), container processes may fail to write to mounted storage if owned by root.
+
+### Solution: Define \`fsGroup\` in Deployment spec:
+\`\`\`yaml
+spec:
+  template:
+    spec:
+      securityContext:
+        fsGroup: 1000670000
+\`\`\`
+`
+  },
+  {
+    id: "doc-05",
+    title: "05. Routes (Edge/Passthrough/Re-encrypt) & NetworkPolicies",
+    category: "Networking",
+    readTime: "9 min read",
+    content: `# 🌐 Concept Guide 05: OpenShift Routes & NetworkPolicies
+
+OpenShift provides native Ingress routing via HAProxy and fine-grained microservice traffic isolation via NetworkPolicies.
+
+---
+
+## 1. OpenShift Route Types
+
+| Route Type | TLS Termination Point | Description |
+| :--- | :--- | :--- |
+| **HTTP (Unsecured)** | None | Plain HTTP traffic routed to Service. |
+| **Edge TLS** | HAProxy Router | TLS is decrypted at Router using public SSL cert. Internal cluster traffic is HTTP. |
+| **Passthrough TLS** | Backend Pod | Encrypted TLS bytes pass untouched through Router straight to Pod (Pod holds cert). |
+| **Re-encryption TLS** | Router AND Backend Pod | Router decrypts external TLS, then opens a *new* encrypted TLS connection to backend Pod. |
+
+### Imperative Route Creation Commands:
+\`\`\`bash
+# HTTP Unsecured Route
+oc expose svc/web-app --hostname=web.apps.crc.testing
+
+# Edge TLS Route
+oc create route edge web-edge --service=web-app --hostname=edge.apps.crc.testing --cert=tls.crt --key=tls.key
+
+# Passthrough TLS Route
+oc create route passthrough web-pass --service=secure-app --hostname=pass.apps.crc.testing
+\`\`\`
+
+---
+
+## 2. Pod Network Isolation with NetworkPolicies
+
+By default, all pods in an OpenShift cluster can talk to all other pods. **NetworkPolicies** restrict ingress/egress traffic.
+
+\`\`\`yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restrict-db-access
+  namespace: finance
+spec:
+  podSelector:
+    matchLabels:
+      app: database
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: backend-api
+    ports:
+    - protocol: TCP
+      port: 5432
+\`\`\`
+`
+  },
+  {
+    id: "doc-06",
+    title: "06. Source-to-Image (S2I) Builds & BuildConfigs",
+    category: "Builds & S2I",
+    readTime: "8 min read",
+    content: `# 🔨 Concept Guide 06: Source-to-Image (S2I) Builds & ImageStreams
+
+Source-to-Image (S2I) is Red Hat's automated workflow for taking raw source code from Git and transforming it into a running container image inside OpenShift.
+
+---
+
+## 1. S2I Key Objects
+
+- **BuildConfig (bc)**: Directs the build process (Git repo URL, builder image tag, triggers).
+- **ImageStream (is)**: Virtual image abstraction that tracks container tags and triggers automated deployments when new image versions land in the registry.
+
+---
+
+## 2. Deploying S2I Applications with CLI
+
+\`\`\`bash
+# Create application directly from Git repository
+oc new-app https://github.com/sclorg/nodejs-ex.git --name=node-app
+
+# Monitor build logs in real time
+oc logs -f bc/node-app
+
+# Trigger manual rebuild after code update
+oc start-build bc/node-app --follow
+\`\`\`
+`
+  },
+  {
+    id: "doc-07",
+    title: "07. ResourceQuotas, LimitRanges & Autoscaling (HPA)",
+    category: "Resource Control",
     readTime: "7 min read",
-    content: `# 🛠️ Concept Guide 04: Systematic OpenShift Troubleshooting
+    content: `# 📊 Concept Guide 07: ResourceQuotas, LimitRanges & HPA
+
+OpenShift administrators must prevent single applications from exhausting multi-tenant cluster compute and storage capacity.
+
+---
+
+## 1. ResourceQuotas vs LimitRanges
+
+- **ResourceQuota**: Caps the *aggregate* compute (CPU/Mem), storage (PVCs), and object count (Pods, Services) for an entire Project/Namespace.
+- **LimitRange**: Sets *default* CPU/Memory requests & limits for individual containers if developers don't specify them.
+
+\`\`\`bash
+# Create project-wide ResourceQuota
+oc create quota project-cap --hard=pods=10,requests.cpu=2,requests.memory=4Gi,persistentvolumeclaims=3
+\`\`\`
+
+---
+
+## 2. Horizontal Pod Autoscaler (HPA)
+
+Autoscales replica count based on real-time CPU/Memory utilization metrics.
+
+\`\`\`bash
+oc autoscale deployment/api-server --min=2 --max=10 --cpu-percent=80
+\`\`\`
+`
+  },
+  {
+    id: "doc-08",
+    title: "08. Node Scheduling, Taints, Tolerations, Cordon & Drain",
+    category: "Node Management",
+    readTime: "9 min read",
+    content: `# 🖥️ Concept Guide 08: Node Scheduling & Node Maintenance
+
+As an EX280 administrator, you must control which nodes run specific workloads and safely take worker nodes offline for maintenance.
+
+---
+
+## 1. Node Labeling & Selectors
+
+\`\`\`bash
+# Label a worker node
+oc label node node1.crc.testing tier=gold --overwrite
+
+# Direct deployment to only schedule on gold nodes
+oc set node-selector deployment/db-app tier=gold
+\`\`\`
+
+---
+
+## 2. Taints & Tolerations
+
+- **Taint**: Applied to a node to *repel* pods unless the pod has a matching toleration.
+- **Toleration**: Added to a pod spec allowing it to run on tainted nodes.
+
+\`\`\`bash
+# Apply taint to node
+oc adm taint node node1.crc.testing dedicated=finance:NoSchedule
+\`\`\`
+
+---
+
+## 3. Node Maintenance: Cordon, Drain & Uncordon
+
+\`\`\`bash
+# 1. Prevent new pods from scheduling onto node
+oc adm node cordon node1.crc.testing
+
+# 2. Evict existing pods safely
+oc adm node drain node1.crc.testing --ignore-daemonsets --delete-emptydir-data
+
+# 3. Restore node to active service
+oc adm node uncordon node1.crc.testing
+\`\`\`
+`
+  },
+  {
+    id: "doc-09",
+    title: "09. Operators & Operator Lifecycle Manager (OLM)",
+    category: "Operators",
+    readTime: "7 min read",
+    content: `# 🤖 Concept Guide 09: Operators & Operator Lifecycle Manager (OLM)
+
+Operators automate the management of complex, stateful applications on OpenShift (e.g., PostgreSQL, Jaeger, Red Hat Quay).
+
+---
+
+## 1. OLM Core Components
+
+- **OperatorHub**: Catalog of community and certified Red Hat operators.
+- **CatalogSource**: Collection of CSVs and CRDs that OLM queries.
+- **Subscription**: Connects a project namespace to an Operator stream for updates.
+- **ClusterServiceVersion (CSV)**: Manifest describing operator deployment and custom resources.
+`
+  },
+  {
+    id: "doc-10",
+    title: "10. Systematic OpenShift Troubleshooting & EX280 Checklist",
+    category: "Troubleshooting",
+    readTime: "8 min read",
+    content: `# 🛠️ Concept Guide 10: Systematic Troubleshooting & Exam Checklist
 
 In the EX280 exam, 20-30% of scenarios involve fixing pre-existing broken deployments or resolving deployment failures.
 
@@ -293,19 +491,13 @@ In the EX280 exam, 20-30% of scenarios involve fixing pre-existing broken deploy
 
 ---
 
-## 2. Common Failures & Fixes
+## 2. EX280 Top 5 Quick Troubleshooting Fixes
 
-### A. CrashLoopBackOff
-- Diagnostic: \`oc logs <pod-name> --previous\` and \`oc describe pod <pod-name>\`
-- Fix: Grant \`anyuid\` SCC if permission denied or add \`fsGroup\`.
-
-### B. Pending Pods
-- Diagnostic: Check \`oc get pvc\` and \`oc describe pod <pod>\` under Events.
-- Fix: Verify StorageClass and node taints.
-
-### C. 503 Service Unavailable on Route
-- Diagnostic: \`oc get endpoints <service-name>\`
-- Fix: Align containerPort, Service targetPort, and Route targetPort.
+1. **CrashLoopBackOff**: Run \`oc logs <pod> --previous\`. If permission denied, grant \`anyuid\` SCC or set \`securityContext.fsGroup\`.
+2. **Pending Pod**: Run \`oc describe pod <pod>\`. Check PVC binding, StorageClass, and ResourceQuota caps.
+3. **Route 503**: Check \`oc get endpoints <service-name>\`. Align containerPort, Service targetPort, and Route targetPort.
+4. **ImagePullBackOff**: Check registry image path and secret pull permissions.
+5. **Node Drain Failing**: Add \`--ignore-daemonsets --delete-emptydir-data\` flags.
 `
   }
 ];
