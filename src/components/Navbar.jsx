@@ -7,15 +7,15 @@ export default function Navbar({ searchFilter, setSearchFilter, theme, toggleThe
 
   return (
     <header className="top-navbar">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <button className="btn-icon mobile-menu-btn" onClick={onToggleMobileSidebar} style={{ display: 'none' }}>
-          <Menu size={18} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1 }}>
+        <button className="btn-icon mobile-menu-btn" onClick={onToggleMobileSidebar} title="Open Menu">
+          <Menu size={20} />
         </button>
         <div className="search-box">
           <Search size={16} />
           <input
             type="text"
-            placeholder="Search docs, CLI commands, labs..."
+            placeholder="Search docs, CLI, labs..."
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
           />
@@ -23,10 +23,10 @@ export default function Navbar({ searchFilter, setSearchFilter, theme, toggleThe
       </div>
 
       <div className="nav-actions">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: 'var(--bg-primary)', padding: '0.4rem 0.85rem', borderRadius: '20px', border: '1px solid var(--border-color)' }}>
+        <div className="progress-badge-mobile" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--bg-primary)', padding: '0.4rem 0.85rem', borderRadius: '20px', border: '1px solid var(--border-color)' }}>
           <ShieldCheck size={16} color="var(--accent-green)" />
-          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
-            Progress: {completedCount}/{totalCount} ({percent}%)
+          <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
+            {completedCount}/{totalCount} ({percent}%)
           </span>
         </div>
 
