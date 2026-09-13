@@ -3,6 +3,7 @@ import { marked } from 'marked';
 import { Clock, Tag } from 'lucide-react';
 import { CONCEPT_DOCS } from '../data/content';
 import { SFG_CONCEPT_DOCS } from '../data/sfgContent';
+import { OpenShiftArchDiagram, SfgArchDiagram, RouteTypesDiagram } from './ArchitectureDiagrams';
 
 export default function DocsViewer({ docId }) {
   const allDocs = [...CONCEPT_DOCS, ...SFG_CONCEPT_DOCS];
@@ -23,6 +24,11 @@ export default function DocsViewer({ docId }) {
         </div>
         <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-primary)' }}>{doc.title}</h2>
       </div>
+
+      {/* Render Graphical Architecture Diagram if relevant */}
+      {doc.id === 'doc-01' && <OpenShiftArchDiagram />}
+      {doc.id === 'doc-05' && <RouteTypesDiagram />}
+      {doc.id === 'sfg-doc-01' && <SfgArchDiagram />}
 
       <div className="card markdown-body" dangerouslySetInnerHTML={{ __html: rawHtml }} />
     </div>
