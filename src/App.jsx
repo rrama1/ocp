@@ -8,11 +8,16 @@ import CliCheatsheet from './components/CliCheatsheet';
 import LabWorkbench from './components/LabWorkbench';
 import DeployGuide from './components/DeployGuide';
 import YamlWorkbench from './components/YamlWorkbench';
-import { STUDY_SCHEDULE_WEEKS, CONCEPT_DOCS } from './data/content';
+import SfgBpmlWorkbench from './components/SfgBpmlWorkbench';
+import { STUDY_SCHEDULE_WEEKS, CONCEPT_DOCS, LAB_EXERCISES } from './data/content';
+import { SFG_CONCEPT_DOCS, SFG_LAB_EXERCISES } from './data/sfgContent';
 
 export default function App() {
+  // Active Platform Mode: 'openshift' | 'sfg'
+  const [platformMode, setPlatformMode] = useState(() => localStorage.getItem('ex280_platform_mode') || 'openshift');
+
   // Navigation state
-  const [activeTab, setActiveTab] = useState('schedule'); // schedule | yaml | doc | lab | exam | cli | deploy
+  const [activeTab, setActiveTab] = useState('schedule');
   const [activeDocId, setActiveDocId] = useState('doc-01');
   const [activeLabId, setActiveLabId] = useState('lab-01');
   const [searchFilter, setSearchFilter] = useState('');
@@ -45,6 +50,20 @@ export default function App() {
       return {};
     }
   });
+
+  useEffect(() => {
+    localStorage.setItem('ex280_platform_mode', platformMode);
+    if (platformMode === 'sfg') {
+      if (activeTab === 'schedule' || activeTab === 'yaml' || activeTab === 'exam' || activeTab === 'cli') {
+        setActiveTab('doc');
+        setActiveDocId('sfg-doc-01');
+      }
+    } else {
+      if (activeTab === 'bpml') {
+        setActiveTab('schedule');
+      }
+    }
+  }, [platformMode]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -88,10 +107,18 @@ export default function App() {
     setActiveTab('lab');
   };
 
-  // Calculate totals
-  const allDays = STUDY_SCHEDULE_WEEKS.flatMap((w) => w.days);
-  const totalDaysCount = allDays.length;
-  const completedDaysCount = allDays.filter((d) => completedDays[d.id]).length;
+  // Calculate totals for active platform
+  const isSfg = platformMode === 'sfg';
+  const currentDocs = isSfg ? SFG_CONCEPT_DOCS : CONCEPT_DOCS;
+  const currentLabs = isSfg ? SFG_LAB_EXERCISES : LAB_EXERCISES;
+
+  const totalItemsCount = isSfg
+    ? currentDocs.length + currentLabs.length
+    : STUDY_SCHEDULE_WEEKS.flatMap((w) => w.days).length;
+
+  const completedItemsCount = isSfg
+    ? currentLabs.filter((l) => l.tasks.every((t) => labTaskState[`${l.id}-${t.id}`])).length
+    : STUDY_SCHEDULE_WEEKS.flatMap((w) => w.days).filter((d) => completedDays[d.id]).length;
 
   return (
     <div className="app-container">
@@ -104,6 +131,8 @@ export default function App() {
         setActiveLabId={setActiveLabId}
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
+        platformMode={platformMode}
+        setPlatformMode={setPlatformMode}
       />
 
       <div className="main-wrapper">
@@ -112,13 +141,15 @@ export default function App() {
           setSearchFilter={setSearchFilter}
           theme={theme}
           toggleTheme={toggleTheme}
-          completedCount={completedDaysCount}
-          totalCount={totalDaysCount}
+          completedCount={completedItemsCount}
+          totalCount={totalItemsCount}
           onToggleMobileSidebar={() => setMobileOpen(!mobileOpen)}
+          platformMode={platformMode}
+          setPlatformMode={setPlatformMode}
         />
 
         <main className="content-body">
-          {activeTab === 'schedule' && (
+          {activeTab === 'schedule' && !isSfg && (
             <StudyTracker
               completedDays={completedDays}
               toggleDayCompleted={toggleDayCompleted}
@@ -127,7 +158,9 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'yaml' && <YamlWorkbench />}
+          {activeTab === 'yaml' && !isSfg && <YamlWorkbench />}
+
+          {activeTab === 'bpml' && isSfg && <SfgBpmlWorkbench />}
 
           {activeTab === 'doc' && <DocsViewer docId={activeDocId} />}
 
@@ -139,14 +172,14 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'exam' && (
+          {activeTab === 'exam' && !isSfg && (
             <ExamSimulator
               examCompletedTasks={examCompletedTasks}
               toggleExamTask={toggleExamTask}
             />
           )}
 
-          {activeTab === 'cli' && <CliCheatsheet externalSearch={searchFilter} />}
+          {activeTab === 'cli' && !isSfg && <CliCheatsheet externalSearch={searchFilter} />}
 
           {activeTab === 'deploy' && <DeployGuide />}
         </main>

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { FlaskConical, Clock, Copy, Check, CheckSquare, Square, Terminal, Shield } from 'lucide-react';
+import { FlaskConical, Clock, Copy, Check, CheckSquare, Square, Terminal } from 'lucide-react';
 import { LAB_EXERCISES } from '../data/content';
+import { SFG_LAB_EXERCISES } from '../data/sfgContent';
 
 export default function LabWorkbench({ labId, labTaskState, toggleLabTask }) {
-  const lab = LAB_EXERCISES.find((l) => l.id === labId) || LAB_EXERCISES[0];
+  const allLabs = [...LAB_EXERCISES, ...SFG_LAB_EXERCISES];
+  const lab = allLabs.find((l) => l.id === labId) || allLabs[0];
   const [copiedTaskIdx, setCopiedTaskIdx] = useState(null);
 
   const handleCopy = (text, idx) => {
@@ -24,16 +26,16 @@ export default function LabWorkbench({ labId, labTaskState, toggleLabTask }) {
             <Clock size={12} /> Est. Time: {lab.estimatedTime}
           </span>
         </div>
-        <h2 style={{ fontSize: '1.8rem', fontWeight: 800 }}>{lab.title}</h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.3rem' }}>
-          Follow the step-by-step task instructions below. Execute the commands in your local CRC, Developer Sandbox, or minikube cluster.
+        <h2 style={{ fontSize: '1.6rem', fontWeight: 800 }}>{lab.title}</h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.3rem' }}>
+          Follow the step-by-step task instructions below. Practice on your Sterling File Gateway or OpenShift test cluster environment.
         </p>
       </div>
 
       {/* Lab Tasks List */}
-      <h3 style={{ fontSize: '1.2rem', fontWeight: 700, margin: '2rem 0 1rem 0' }}>Hands-on Step-by-Step Tasks</h3>
+      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, margin: '1.5rem 0 1rem 0' }}>Hands-on Step-by-Step Tasks</h3>
 
-      <div style={{ display: 'grid', gap: '1.25rem' }}>
+      <div style={{ display: 'grid', gap: '1rem' }}>
         {lab.tasks.map((task, idx) => {
           const taskKey = `${lab.id}-${task.id}`;
           const isDone = !!labTaskState[taskKey];
@@ -49,7 +51,7 @@ export default function LabWorkbench({ labId, labTaskState, toggleLabTask }) {
                 marginBottom: 0
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.65rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <button
                     onClick={() => toggleLabTask(taskKey)}
@@ -57,7 +59,7 @@ export default function LabWorkbench({ labId, labTaskState, toggleLabTask }) {
                   >
                     {isDone ? <CheckSquare size={20} /> : <Square size={20} />}
                   </button>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                     Step {idx + 1}: {task.title}
                   </h4>
                 </div>
@@ -65,14 +67,14 @@ export default function LabWorkbench({ labId, labTaskState, toggleLabTask }) {
                 <button
                   className="btn btn-outline"
                   onClick={() => handleCopy(task.command, idx)}
-                  style={{ fontSize: '0.75rem', padding: '0.25rem 0.6rem', gap: '0.3rem' }}
+                  style={{ fontSize: '0.75rem', padding: '0.2rem 0.55rem', gap: '0.3rem' }}
                 >
                   {isCopied ? <Check size={14} color="var(--accent-green)" /> : <Copy size={14} />}
                   {isCopied ? 'Copied' : 'Copy Code'}
                 </button>
               </div>
 
-              <pre style={{ margin: 0, fontSize: '0.85rem' }}>
+              <pre style={{ margin: 0, fontSize: '0.825rem' }}>
                 <code>{task.command}</code>
               </pre>
             </div>
@@ -81,14 +83,14 @@ export default function LabWorkbench({ labId, labTaskState, toggleLabTask }) {
       </div>
 
       {/* Verification Commands Card */}
-      <div className="card" style={{ marginTop: '2rem', borderLeft: '4px solid var(--accent-green)' }}>
-        <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Terminal size={18} color="var(--accent-green)" /> Solution Verification Commands
+      <div className="card" style={{ marginTop: '1.5rem', borderLeft: '4px solid var(--accent-green)' }}>
+        <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Terminal size={18} color="var(--accent-green)" /> Solution Verification Steps
         </h4>
-        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.75rem' }}>
-          Run these commands in your cluster terminal to verify your resources are correctly configured:
+        <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', marginBottom: '0.65rem' }}>
+          Execute these steps to verify your partner, routing channel, or transfer status:
         </p>
-        <pre style={{ margin: 0, fontSize: '0.85rem' }}>
+        <pre style={{ margin: 0, fontSize: '0.825rem' }}>
           <code>{lab.verification}</code>
         </pre>
       </div>
