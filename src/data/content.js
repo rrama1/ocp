@@ -1,11 +1,359 @@
 export const APP_METADATA = {
   title: "OpenShift EX280 Mastery Kit",
   subtitle: "Red Hat Certified Specialist in OpenShift Administration",
-  version: "2.0.0",
+  version: "2.1.0",
   passingScore: 210,
   maxScore: 300,
   timeLimitMinutes: 180
 };
+
+export const YAML_STRUCTURE_EXPLANATION = {
+  title: "Understanding OpenShift YAML Structure in 4 Core Elements",
+  description: "Every Kubernetes and OpenShift object is defined using a clean, human-readable YAML structure consisting of 4 top-level keys:",
+  keys: [
+    { key: "apiVersion", desc: "Tells the API server which version of the API schema to use (e.g. v1, apps/v1, route.openshift.io/v1)." },
+    { key: "kind", desc: "Specifies the type of object being created (e.g. Pod, Deployment, Service, Route, PersistentVolumeClaim)." },
+    { key: "metadata", desc: "Contains identifying information like name, namespace, labels, and annotations." },
+    { key: "spec", desc: "The DESIRED STATE configuration (containers, replicas, ports, storage size, security context)." }
+  ]
+};
+
+export const YAML_TEMPLATES_CATALOG = [
+  {
+    id: "pod",
+    name: "Pod Manifest",
+    category: "Workloads",
+    description: "Single container workload with securityContext and resource limits.",
+    yaml: `apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app-pod
+  namespace: default
+  labels:
+    app: my-app
+spec:
+  serviceAccountName: default
+  containers:
+  - name: web-container
+    image: quay.io/bitnami/nginx:latest
+    ports:
+    - containerPort: 8080
+      name: http
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 512Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: false`
+  },
+  {
+    id: "deployment",
+    name: "Deployment Manifest",
+    category: "Workloads",
+    description: "Scalable workload controller managing multiple Pod replicas with volume mounts.",
+    yaml: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-api
+  namespace: dev-team
+  labels:
+    app: web-api
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-api
+  template:
+    metadata:
+      labels:
+        app: web-api
+    spec:
+      securityContext:
+        fsGroup: 1000670000
+      containers:
+      - name: api-container
+        image: quay.io/bitnami/express:latest
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secret
+        volumeMounts:
+        - name: storage-vol
+          mountPath: /var/data
+      volumes:
+      - name: storage-vol
+        persistentVolumeClaim:
+          claimName: app-pvc`
+  },
+  {
+    id: "service",
+    name: "Service (ClusterIP)",
+    category: "Networking",
+    description: "Internal load balancer mapping internal ports to pod containers.",
+    yaml: `apiVersion: v1
+kind: Service
+metadata:
+  name: web-api-service
+  namespace: dev-team
+spec:
+  selector:
+    app: web-api
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP`
+  },
+  {
+    id: "route-edge",
+    name: "OpenShift Route (Edge TLS)",
+    category: "Networking",
+    description: "Exposes Service externally with TLS termination at HAProxy router.",
+    yaml: `apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: web-api-route
+  namespace: dev-team
+spec:
+  host: api.apps.crc.testing
+  to:
+    kind: Service
+    name: web-api-service
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    certificate: |
+      -----BEGIN CERTIFICATE-----
+      MII...DUMMY CERTIFICATE...
+      -----END CERTIFICATE-----
+    key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MII...DUMMY PRIVATE KEY...
+      -----END RSA PRIVATE KEY-----`
+  },
+  {
+    id: "route-passthrough",
+    name: "OpenShift Route (Passthrough TLS)",
+    category: "Networking",
+    description: "Direct encrypted TLS pass-through straight to Pod container.",
+    yaml: `apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: secure-pass-route
+  namespace: dev-team
+spec:
+  host: secure.apps.crc.testing
+  to:
+    kind: Service
+    name: secure-service
+  port:
+    targetPort: 8443
+  tls:
+    termination: passthrough`
+  },
+  {
+    id: "pvc",
+    name: "PersistentVolumeClaim (PVC)",
+    category: "Storage",
+    description: "Storage allocation request using StorageClass and access modes.",
+    yaml: `apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-pvc
+  namespace: dev-team
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: gp2`
+  },
+  {
+    id: "secret-cm",
+    name: "Secret & ConfigMap",
+    category: "Configuration",
+    description: "Inject environment variables and credentials into applications.",
+    yaml: `apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: dev-team
+data:
+  DB_HOST: "postgres.dev-team.svc"
+  DB_PORT: "5432"
+  LOG_LEVEL: "info"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+  namespace: dev-team
+type: Opaque
+stringData:
+  DB_USER: "admin"
+  DB_PASSWORD: "SuperSecretPassword123!"`
+  },
+  {
+    id: "netpol",
+    name: "NetworkPolicy Isolation",
+    category: "Security",
+    description: "Restricts ingress traffic so only designated pods can connect.",
+    yaml: `apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: isolate-backend-db
+  namespace: dev-team
+spec:
+  podSelector:
+    matchLabels:
+      app: database
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: api-server
+    ports:
+    - protocol: TCP
+      port: 5432`
+  },
+  {
+    id: "quota-limit",
+    name: "ResourceQuota & LimitRange",
+    category: "Resource Control",
+    description: "Multi-tenant project quota caps and container default limits.",
+    yaml: `apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: project-quota
+  namespace: dev-team
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    persistentvolumeclaims: "4"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-container-limits
+  namespace: dev-team
+spec:
+  limits:
+  - default:
+      cpu: "500m"
+      memory: "512Mi"
+    defaultRequest:
+      cpu: "100m"
+      memory: "128Mi"
+    type: Container`
+  },
+  {
+    id: "hpa",
+    name: "HorizontalPodAutoscaler (HPA)",
+    category: "Scaling",
+    description: "Automatically scales deployment replicas based on CPU threshold.",
+    yaml: `apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-hpa
+  namespace: dev-team
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web-api
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80`
+  },
+  {
+    id: "s2i-build",
+    name: "S2I BuildConfig & ImageStream",
+    category: "Builds & S2I",
+    description: "OpenShift Source-to-Image build configuration from Git.",
+    yaml: `apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: nodejs-app
+  namespace: dev-team
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: nodejs-app-bc
+  namespace: dev-team
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/sclorg/nodejs-ex.git
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: nodejs:18-ubi8
+  output:
+    to:
+      kind: ImageStreamTag
+      name: nodejs-app:latest`
+  },
+  {
+    id: "openshift-template",
+    name: "OpenShift Parameterized Template",
+    category: "Templates",
+    description: "Reusable multi-resource OpenShift template with parameter values.",
+    yaml: `apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: app-deploy-template
+parameters:
+- name: APP_NAME
+  value: my-service
+  required: true
+- name: REPLICAS
+  value: "3"
+objects:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: \${APP_NAME}
+  spec:
+    replicas: \${REPLICAS}
+    selector:
+      matchLabels:
+        app: \${APP_NAME}
+    template:
+      metadata:
+        labels:
+          app: \${APP_NAME}
+      spec:
+        containers:
+        - name: app
+          image: quay.io/bitnami/nginx:latest`
+  }
+];
 
 export const STUDY_SCHEDULE_WEEKS = [
   {

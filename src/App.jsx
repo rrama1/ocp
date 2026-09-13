@@ -7,11 +7,12 @@ import ExamSimulator from './components/ExamSimulator';
 import CliCheatsheet from './components/CliCheatsheet';
 import LabWorkbench from './components/LabWorkbench';
 import DeployGuide from './components/DeployGuide';
-import { STUDY_SCHEDULE_WEEKS, CONCEPT_DOCS, MOCK_EXAM_QUESTIONS } from './data/content';
+import YamlWorkbench from './components/YamlWorkbench';
+import { STUDY_SCHEDULE_WEEKS, CONCEPT_DOCS } from './data/content';
 
 export default function App() {
   // Navigation state
-  const [activeTab, setActiveTab] = useState('schedule'); // schedule | doc | lab | exam | cli | deploy
+  const [activeTab, setActiveTab] = useState('schedule'); // schedule | yaml | doc | lab | exam | cli | deploy
   const [activeDocId, setActiveDocId] = useState('doc-01');
   const [activeLabId, setActiveLabId] = useState('lab-01');
   const [searchFilter, setSearchFilter] = useState('');
@@ -125,6 +126,8 @@ export default function App() {
               onSelectLab={handleSelectLab}
             />
           )}
+
+          {activeTab === 'yaml' && <YamlWorkbench />}
 
           {activeTab === 'doc' && <DocsViewer docId={activeDocId} />}
 

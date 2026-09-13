@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, BookOpen, Terminal, Award, FlaskConical, CloudUpload, CheckCircle2 } from 'lucide-react';
+import { Calendar, BookOpen, Terminal, Award, FlaskConical, CloudUpload, FileCode } from 'lucide-react';
 import { CONCEPT_DOCS, LAB_EXERCISES } from '../data/content';
 
 export default function Sidebar({ activeTab, setActiveTab, activeDocId, setActiveDocId, activeLabId, setActiveLabId, mobileOpen, setMobileOpen }) {
@@ -29,6 +29,14 @@ export default function Sidebar({ activeTab, setActiveTab, activeDocId, setActiv
         >
           <Calendar size={18} />
           <span>30-Day Study Tracker</span>
+        </button>
+
+        <button
+          className={`nav-item ${activeTab === 'yaml' ? 'active' : ''}`}
+          onClick={() => handleNavClick('yaml')}
+        >
+          <FileCode size={18} />
+          <span>YAML Templates & Builder</span>
         </button>
 
         <button
