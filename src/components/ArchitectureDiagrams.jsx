@@ -1,5 +1,5 @@
 import React from 'react';
-import { Server, Shield, Network, ArrowRight, Database, Lock, Cpu, Layers, RefreshCw, HardDrive } from 'lucide-react';
+import { Server, Shield, Network, ArrowRight, Database, Lock, Cpu, Layers, RefreshCw, HardDrive, Eye, Activity } from 'lucide-react';
 
 export function OpenShiftArchDiagram() {
   return (
@@ -64,7 +64,6 @@ export function SfgArchDiagram() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem', alignItems: 'center' }}>
-        {/* Step 1 */}
         <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: '0.85rem', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-blue)', textTransform: 'uppercase' }}>1. Producer</div>
           <div style={{ fontWeight: 700, fontSize: '0.85rem', marginTop: '0.2rem' }}>AcmePayables</div>
@@ -73,7 +72,6 @@ export function SfgArchDiagram() {
 
         <ArrowRight size={20} color="var(--text-muted)" style={{ justifySelf: 'center' }} />
 
-        {/* Step 2 */}
         <div style={{ background: 'rgba(56, 189, 248, 0.1)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '0.85rem', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-blue)', textTransform: 'uppercase' }}>2. Mailbox /Inbox</div>
           <div style={{ fontWeight: 700, fontSize: '0.85rem', marginTop: '0.2rem' }}>Arrive Event</div>
@@ -82,7 +80,6 @@ export function SfgArchDiagram() {
 
         <ArrowRight size={20} color="var(--text-muted)" style={{ justifySelf: 'center' }} />
 
-        {/* Step 3 */}
         <div style={{ background: 'rgba(234, 179, 8, 0.1)', border: '1px solid rgba(234, 179, 8, 0.3)', padding: '0.85rem', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-yellow)', textTransform: 'uppercase' }}>3. RCT Routing</div>
           <div style={{ fontWeight: 700, fontSize: '0.85rem', marginTop: '0.2rem' }}>Regex & Transform</div>
@@ -91,7 +88,6 @@ export function SfgArchDiagram() {
 
         <ArrowRight size={20} color="var(--text-muted)" style={{ justifySelf: 'center' }} />
 
-        {/* Step 4 */}
         <div style={{ background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)', padding: '0.85rem', borderRadius: 'var(--radius-md)', textAlign: 'center' }}>
           <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--accent-green)', textTransform: 'uppercase' }}>4. Consumer</div>
           <div style={{ fontWeight: 700, fontSize: '0.85rem', marginTop: '0.2rem' }}>GlobalBank</div>
@@ -110,7 +106,6 @@ export function RouteTypesDiagram() {
       </div>
 
       <div style={{ display: 'grid', gap: '1rem' }}>
-        {/* Edge TLS */}
         <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
           <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--accent-blue)', marginBottom: '0.4rem' }}>
             1. Edge Termination
@@ -124,7 +119,6 @@ export function RouteTypesDiagram() {
           </div>
         </div>
 
-        {/* Passthrough TLS */}
         <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
           <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--accent-yellow)', marginBottom: '0.4rem' }}>
             2. Passthrough Termination
@@ -138,7 +132,6 @@ export function RouteTypesDiagram() {
           </div>
         </div>
 
-        {/* Re-encrypt TLS */}
         <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--border-color)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
           <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--accent-green)', marginBottom: '0.4rem' }}>
             3. Re-encryption Termination
@@ -149,6 +142,83 @@ export function RouteTypesDiagram() {
             <span style={{ background: 'rgba(238, 0, 0, 0.15)', padding: '0.2rem 0.5rem', borderRadius: '4px', color: '#ff4d4d' }}>Router (Decrypt & Re-encrypt)</span>
             <ArrowRight size={14} />
             <span style={{ background: 'rgba(34, 197, 94, 0.15)', padding: '0.2rem 0.5rem', borderRadius: '4px', color: 'var(--accent-green)' }}>Pod (Internal TLS)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function SfgEnterpriseInfrastructureDiagram() {
+  return (
+    <div className="card" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', padding: '1.5rem', margin: '1.5rem 0' }}>
+      <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent-blue)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <Shield size={18} /> Enterprise Sterling MFT Infrastructure Topology (DMZ vs Internal Zone)
+      </div>
+
+      <div style={{ display: 'grid', gap: '1rem' }}>
+        {/* DMZ Zone Box */}
+        <div style={{ background: 'rgba(238, 0, 0, 0.08)', border: '2px dashed rgba(238, 0, 0, 0.4)', borderRadius: 'var(--radius-md)', padding: '1rem' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ff4d4d', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
+            🛡️ DMZ ZONE (EXTERNALLY EXPOSED REVERSE PROXY LAYER)
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem' }}>
+            <div style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ fontWeight: 700, color: 'var(--accent-blue)', fontSize: '0.85rem' }}>Sterling Secure Proxy (SSP)</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                Terminates inbound SFTP/AS2/HTTPS in DMZ. Holds zero data & credentials.
+              </div>
+            </div>
+            <div style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ fontWeight: 700, color: 'var(--accent-yellow)', fontSize: '0.85rem' }}>Perimeter Server (PS)</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                Multiplexes socket communication between DMZ and internal B2Bi cluster.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ justifySelf: 'center', color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <ArrowRight size={16} style={{ transform: 'rotate(90deg)' }} /> Internal Firewall (Secure Multiplexed Control Channel) <ArrowRight size={16} style={{ transform: 'rotate(90deg)' }} />
+        </div>
+
+        {/* Internal Trusted Zone Box */}
+        <div style={{ background: 'rgba(34, 197, 94, 0.08)', border: '2px solid rgba(34, 197, 94, 0.4)', borderRadius: 'var(--radius-md)', padding: '1rem' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--accent-green)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.75rem' }}>
+            🔒 INTERNAL TRUSTED ZONE (APP NODES & DATABASE LAYER)
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
+            <div style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ fontWeight: 700, color: 'var(--accent-green)', fontSize: '0.85rem' }}>SEAS Auth Server</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                LDAP/AD/SAML External Authentication & Certificate Validation.
+              </div>
+            </div>
+            <div style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '0.85rem' }}>B2Bi / SFG Engine Cluster</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                Active-Active BPML Process Execution & Mailbox Subsystem.
+              </div>
+            </div>
+            <div style={{ background: 'var(--bg-primary)', padding: '0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div style={{ fontWeight: 700, color: 'var(--accent-yellow)', fontSize: '0.85rem' }}>Database & Shared Storage</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
+                DB2/Oracle DB cluster + NAS/SAN Persistent Shared Repository.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Control Center Box */}
+        <div style={{ background: 'rgba(56, 189, 248, 0.08)', border: '1px solid rgba(56, 189, 248, 0.3)', padding: '0.85rem', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <Eye size={22} color="var(--accent-blue)" />
+          <div>
+            <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--accent-blue)' }}>
+              IBM Sterling Control Center (SCC) Monitoring
+            </div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+              Monitors all B2Bi nodes, SSP proxies, file arrival SLAs, node health, and automated alert escalations.
+            </div>
           </div>
         </div>
       </div>
